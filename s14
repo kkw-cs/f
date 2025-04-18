@@ -1,0 +1,100 @@
+1.
+
+const http = require('http');
+
+const server = http.createServer((req, res) => {
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/html'); 
+
+  if (req.url === '/') {
+    res.end(`<h1>Hello, World! This is the home page </h1>`);
+  } else if (req.url === '/about') {
+    res.end(`<h1>This is the about page. </h1>`);
+  } else if (req.url === '/contact') {
+    res.end(`<h1>Contact us at example@email.com</h2>`);
+  } else {
+    res.statusCode = 404; 
+    res.end('Page Not Found');
+  }
+});
+
+server.listen(3000, () => {
+  console.log('Server running at http://127.0.0.1:3000/....');
+});
+
+2.
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Registration</title>
+    <style>
+        .error { color: red; display: none; }
+        .form-group { margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <form id="employeeForm" >
+        <div class="form-group">
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob">
+            <span id="dobError" class="error">You must be at least 18 years old</span>
+        </div>
+        
+        <div class="form-group">
+            <label for="joinDate">Joining Date:</label>
+            <input type="date" id="joinDate" name="joinDate">
+            <span id="joinDateError" class="error">Joining date must be after DOB and not in future</span>
+        </div>
+        
+        <div class="form-group">
+            <label for="salary">Salary:</label>
+            <input type="number" id="salary" name="salary" step="0.01">
+            <span id="salaryError" class="error">Salary must be between 10000 and 500000</span>
+        </div>
+        
+        <button type="submit" onclick="validateForm(event)">Register</button>
+    </form>
+
+    <script>
+        function validateForm() {
+            let isValid = true;
+            const today = new Date();
+            
+            const dob = new Date(document.getElementById('dob').value);
+            const dobError = document.getElementById('dobError');
+            const age = today.getFullYear() - dob.getFullYear();
+            if (age < 18 || isNaN(dob.getTime())) {
+                dobError.style.display = 'block';
+                isValid = false;
+            } else {
+                dobError.style.display = 'none';
+            }
+            
+            const joinDate = new Date(document.getElementById('joinDate').value);
+            const joinDateError = document.getElementById('joinDateError');
+            if (joinDate <= dob || joinDate > today || isNaN(joinDate.getTime())) {
+                joinDateError.style.display = 'block';
+                isValid = false;
+            } else {
+                joinDateError.style.display = 'none';
+            }
+            
+            const salary = parseFloat(document.getElementById('salary').value);
+            const salaryError = document.getElementById('salaryError');
+            if (salary < 10000 || salary > 500000 || isNaN(salary)) {
+                salaryError.style.display = 'block';
+                isValid = false;
+            } else {
+                salaryError.style.display = 'none';
+            }
+            
+            if(!isValid) {
+                event.preventDefault();
+            } else {
+                alert("Employee Login Success");
+            }
+        }
+    </script>
+</body>
+</html>
