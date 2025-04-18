@@ -1,0 +1,141 @@
+1.
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Form</title>
+    <style>
+        .error { color: red; display: none; }
+        .form-group { margin: 10px 0; }
+    </style>
+</head>
+<body>
+
+    <form id="loginForm">
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email">
+            <span id="emailError" class="error">Please enter a valid email address</span>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+            <span id="passwordError" class="error">Password must be 8-20 characters with at least one number, one uppercase and one lowercase letter</span>
+        </div>
+
+        <button type="submit" onclick="validateForm(event)">Login</button>
+    </form>
+
+    <script>
+        function validateForm(event) {
+            let isValid = true;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/;
+
+            
+            const email = document.getElementById('email').value;
+            const emailError = document.getElementById('emailError');
+            if (!emailRegex.test(email)) {
+                emailError.style.display = 'block';
+                isValid = false;
+            } else {
+                emailError.style.display = 'none';
+            }
+
+            
+            const password = document.getElementById('password').value;
+            const passwordError = document.getElementById('passwordError');
+            if (!passwordRegex.test(password)) {
+                passwordError.style.display = 'block';
+                isValid = false;
+            } else {
+                passwordError.style.display = 'none';
+            }
+
+            if (!isValid) {
+                event.preventDefault(); 
+            } else {
+                alert("Login Success");
+            }
+        }
+    </script>
+
+</body>
+</html>
+2.
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Registration</title>
+    <style>
+        .error { color: red; display: none; }
+        .form-group { margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <form id="studentForm">
+        <div class="form-group">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName">
+            <span id="firstNameError" class="error">First name should contain only alphabets</span>
+        </div>
+
+        <div class="form-group">
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName">
+            <span id="lastNameError" class="error">Last name should contain only alphabets</span>
+        </div>
+
+        <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age">
+            <span id="ageError" class="error">Age must be between 18 and 50</span>
+        </div>
+
+        <button type="submit" onclick="validateForm(event)">Register</button>
+    </form>
+
+    <script>
+        function validateForm(event) {
+            let isValid = true;
+            
+            const nameRegex = /^[A-Za-z]+$/;
+            const firstName = document.getElementById('firstName').value;
+            const firstNameError = document.getElementById('firstNameError');
+            if (!nameRegex.test(firstName)) {
+                firstNameError.style.display = 'block';
+                isValid = false;
+            } else {
+                firstNameError.style.display = 'none';
+            }
+
+            
+            const lastName = document.getElementById('lastName').value;
+            const lastNameError = document.getElementById('lastNameError');
+            if (!nameRegex.test(lastName)) {
+                lastNameError.style.display = 'block';
+                isValid = false;
+            } else {
+                lastNameError.style.display = 'none';
+            }
+
+            
+            const age = document.getElementById('age').value;
+            const ageError = document.getElementById('ageError');
+            if (age < 18 || age > 50 || age === "") {
+                ageError.style.display = 'block';
+                isValid = false;
+            } else {
+                ageError.style.display = 'none';
+            }
+
+            if (!isValid) {
+                event.preventDefault(); // Stops form submission if validation fails
+            } else {
+                alert("Registration Successful!");
+            }
+        }
+    </script>
+</body>
+</html>
