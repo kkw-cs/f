@@ -1,4 +1,129 @@
-1.
+Q1
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+        }
+        
+        .error {
+            color: red;
+            margin-bottom: 15px;
+            display: none;
+        }
+        
+        .links {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Login</h1>
+    
+    <div id="errorMessage" class="error"></div>
+    
+    <form id="loginForm">
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        
+        <button type="submit">Login</button>
+    </form>
+    
+    <div class="links">
+        <p>Don't have an account? <a href="/register">Register</a></p>
+    </div>
+    
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    const errorMessage = document.getElementById('errorMessage');
+                    errorMessage.textContent = data.message;
+                    errorMessage.style.display = 'block';
+                    return;
+                }
+                
+                alert('Login successful!');
+    
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('errorMessage').textContent = 'An error occurred. Please try again.';
+                document.getElementById('errorMessage').style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
+Q1.1
 const express = require('express');
 const app = express();
 const bcrypt = require("bcrypt");
@@ -49,10 +174,14 @@ app.post('/register', async (req, res) => {
         if (!username || !email || !password) {
             return res.status(400).json({ message: "All fields are required" });
         }
-               if (users.some(user => user.email === email)) {
+        
+        // email already exists
+        if (users.some(user => user.email === email)) {
             return res.status(400).json({ message: "Email already exists" });
         }
-          if (users.some(user => user.username === username)) {
+        
+        // username already exists
+        if (users.some(user => user.username === username)) {
             return res.status(400).json({ message: "Username already exists" });
         }
         
@@ -80,16 +209,15 @@ const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
-2.
-
+Q2
 const mysql = require('mysql2');
 
-
+// MySQL Connection
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '@demo22',
-    database: 'college'
+    password: '312002',
+    database: 'college' // Change if using a different database
 });
 
 connection.connect(err => {
@@ -97,7 +225,7 @@ connection.connect(err => {
     console.log('Connected to MySQL.');
 });
 
-
+// Query to select all teachers
 const sql = 'SELECT * FROM Teacher WHERE salary > 20000';
 
 connection.query(sql, (err, results) => {
@@ -106,3 +234,4 @@ connection.query(sql, (err, results) => {
     console.log('Teachers with salary > 20,000:', results);
     connection.end();
 });
+
