@@ -1,5 +1,3 @@
-1.
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,42 +15,50 @@
         var app = angular.module('timeApp', []);
 
         app.controller('timeController', function($scope, $interval) {
-                       var updateTime = function() {
+            // Function to update time
+            var updateTime = function() {
                 $scope.currentTime = new Date().toLocaleString();
             };
 
-                       $interval(updateTime, 1000);
+            // Update time every second
+            $interval(updateTime, 1000);
 
-                        updateTime();
+            // Initialize with current time
+            updateTime();
         });
     </script>
 
 </body>
 </html>
-2.
-
+Q2
 const EventEmitter = require('events');
 const myEmitter = new EventEmitter();
 
 console.log('Starting event loop demonstration...');
 
+// Set up event listener first
 myEmitter.on('userAction', (phase, data) => {
     console.log(`Callback executed: ${phase} - ${data}`);
 });
- setImmediate(() => {
+
+// Check phase (runs before timers)
+setImmediate(() => {
     console.log('Check phase: Immediate execution');
     myEmitter.emit('userAction', 'Check phase', 'immediate callback');
 });
 
+// Timer phase (1 second)
 setTimeout(() => {
     console.log('Timer phase: 1 second timer');
     myEmitter.emit('userAction', 'Timer phase', 'timer callback');
 }, 1000);
 
+// Interval (2 seconds)
 const interval = setInterval(() => {
     myEmitter.emit('userAction', 'Timer phase', 'interval callback');
 }, 2000);
 
+// Cleanup
 setTimeout(() => {
     clearInterval(interval);
     console.log('Demonstration complete');
