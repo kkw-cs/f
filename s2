@@ -1,9 +1,9 @@
-
-1.
+Q1
 const text3 = "Full Stack!";
 const reverseStr = text3.split("").reverse().join("");
 console.log(reverseStr);
-2.const http = require('http');
+Q2
+const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const url = require('url');
@@ -27,7 +27,8 @@ const server = http.createServer((req, res) => {
                 <button type="submit">Append</button>
             </form>
     `);
-    res.end();   } else if (req.url === '/append') {
+    res.end(); // Important: signal the end of the response
+  } else if (req.url === '/append') {
       if (req.method === 'POST') {
             let body = '';
             req.on('data', chunk => {
