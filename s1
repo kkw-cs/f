@@ -1,5 +1,4 @@
-1.
-
+Q1
 <!DOCTYPE html>
 <html>
 <head>
@@ -63,7 +62,7 @@
 
 </body>
 </html>
-2.
+Q2
 <!DOCTYPE html>
 <html>
 <head>
@@ -110,7 +109,7 @@
                 firstNameError.style.display = 'none';
             }
 
-            
+            // Last Name validation
             const lastName = document.getElementById('lastName').value;
             const lastNameError = document.getElementById('lastNameError');
             if (!nameRegex.test(lastName)) {
@@ -120,7 +119,7 @@
                 lastNameError.style.display = 'none';
             }
 
-            
+            // Age validation
             const age = document.getElementById('age').value;
             const ageError = document.getElementById('ageError');
             if (age < 18 || age > 50 || age === "") {
@@ -139,3 +138,5 @@
     </script>
 </body>
 </html>
+
+
